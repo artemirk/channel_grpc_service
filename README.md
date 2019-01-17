@@ -1,14 +1,10 @@
 # channel_grpc_service
 channel_grpc_service
 
-- Install
+Install
+- pip3 install grpcio grpcio-tools
 
-pip3 install grpcio
-pip3 install grpcio-tools
-
-
-- Run
-
-make generate-proto
-make run-server
-make run-client
+Run
+- make generate-proto
+- make run-server
+- make run-client
