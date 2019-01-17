@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+message Campaign {
+    string app = 1;
+    string channel = 2;
+}
+
+message GetCampaignsRequest {
+    int64 ad_account_id = 1;
+}
+
+service Acquired {
+    rpc get_campaigns(GetCampaignsRequest) returns (stream Campaign) {}
+}
+
