@@ -55,25 +55,26 @@ class AcquiredServer(acquired_pb2_grpc.AcquiredServicer):
             time.sleep(2) # Emulate delay
         return
         
-def serve(num_workers: int = 1, port:int = 50051):
+def serve(num_workers: int = 1, port:int = 50051, graceful_shutdown_timeout:int = 0):
     
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=num_workers))
     acquired_pb2_grpc.add_AcquiredServicer_to_server(AcquiredServer(num_workers, port), server)
     server.add_insecure_port('[::]:{}'.format(port))
     server.start()
-    logging.info("Started grpc server port={}".format(port))
+    logging.info("Started grpc server port={} graceful_shutdown_timeout={}".format(port, graceful_shutdown_timeout))
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)
     except KeyboardInterrupt:
-        server.stop(0)
+        server.stop(graceful_shutdown_timeout)
 
 def run():
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_workers', dest='num_workers', type=int, default=2)
     parser.add_argument('--port', required=True, dest='port', choices=(50051, 50052, 50053), type=int)
+    parser.add_argument('--graceful_shutdown_timeout', dest='graceful_shutdown_timeout', type=int, default=0)
     args = parser.parse_args()
-    serve(num_workers=args.num_workers, port=args.port)
+    serve(num_workers=args.num_workers, port=args.port, graceful_shutdown_timeout=args.graceful_shutdown_timeout)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
