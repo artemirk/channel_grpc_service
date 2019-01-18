@@ -70,7 +70,7 @@ def serve(num_workers: int = 1, port:int = 50051):
 
 def run():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--num_workers', dest='num_workers', type=int, default=1)
+    parser.add_argument('--num_workers', dest='num_workers', type=int, default=2)
     parser.add_argument('--port', required=True, dest='port', choices=(50051, 50052, 50053), type=int)
     args = parser.parse_args()
     serve(num_workers=args.num_workers, port=args.port)

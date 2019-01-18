@@ -6,5 +6,8 @@ Install
 
 Run
 - make generate-proto
-- make run-server
+- make run-server-1
+- make run-server-2
+
+- make run-client
 - make run-client

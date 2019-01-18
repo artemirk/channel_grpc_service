@@ -13,8 +13,8 @@ def run():
     # nginx config for proxy
 
     upstream acquired_grpc {
-        # no load balancing method is specified for Round Robin
         # https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/
+        least_conn;
         server localhost:50051;
         server localhost:50052;
         server localhost:50053 down;
